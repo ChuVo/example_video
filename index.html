@@ -1,0 +1,102 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <header></header>
+  <container>
+    <div class="loader invisible"></div>
+    <nav class="sidebar">
+      <a class="sidebar-item" href="#">
+        <div class="sidebar-item-icon sidebar-item-icon--translation"></div>
+        <span>Translation</span>
+      </a>
+    </nav>
+    <div class="content">
+      <div class="stream-buttons"></div>
+    </div>
+  </container>
+
+  <script>
+    // request to file where save data
+    fetch('./db.json')
+      .then((response) => {
+        showLoader()
+        return response.json();
+      })
+      .then(data => {
+        const sources = data
+
+        sources.forEach((source) => {
+            const button = document.createElement('div')
+            const title = source.title
+            button.classList.add('stream-box')
+            button.innerHTML = `<div class="stream-button"></div><span class="stream-title">${title}</span>`
+            button.addEventListener('click', () => initPlayer(source.url))
+
+            const box = document.querySelector('.stream-buttons')
+            box.append(button)
+          }
+        )
+
+        // init firste video
+        initPlayer(sources[0].url)
+
+        hideLoader()
+      }).catch((err) => {
+      showError(err.response.status)
+      hideLoader()
+      console.log(err.response.status)
+    });
+
+// что бы воспроизвесить live нужно запросить у потока src
+// для для отображения шаблона плеера нужен id создателя user.owner
+// const src = encodeURIComponent(this.stream.src)
+// return `//video.platformcraft.ru/stream?src=${src}&autoplay=false&switcher&brand&owner=${user.owner}`
+
+    function initPlayer (src) {
+      const player = document.querySelector('#player')
+      if (player) {
+        player.src = `http://video.platformcraft.ru/stream?src=${encodeURIComponent(src)}&autoplay=true&liveui&switcher`;
+
+        return
+      }
+
+      const iframeUrl = `http://video.platformcraft.ru/stream?src=${encodeURIComponent(src)}&autoplay=true&liveui&switcher`;
+      const box = document.querySelector('.content')
+      const iframe = document.createElement('iframe')
+      iframe.id = 'player'
+      iframe.setAttribute("width", 530)
+      iframe.setAttribute("height", 340)
+      iframe.setAttribute("src", iframeUrl)
+
+      box.append(iframe)
+    }
+
+    function showError (err) {
+      const box = document.querySelector('.container');
+      const toast = document.createElement('div');
+      toast.classList.add('toast');
+      toast.innerText = 'Ops! (' + err + ')';
+
+      box.append(toast)
+    }
+
+    function showLoader () {
+      const loader = document.querySelector('.loader')
+      loader.classList.remove('invisible')
+    }
+
+    function hideLoader () {
+      const loader = document.querySelector('.loader')
+      loader.classList.add('invisible')
+    }
+
+  </script>
+</body>
+</html>

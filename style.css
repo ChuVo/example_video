@@ -1,0 +1,97 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    height: 45px;
+    background: lightskyblue;
+}
+
+container {
+    display: flex;
+    height: 100%;
+    width: 100%;
+}
+
+.sidebar {
+    width: 220px;
+    height: 100%;
+    margin-right: 16px;
+    padding: 10px;
+    border-right: 1px solid lightgrey;
+}
+
+.stream-buttons {
+    display: flex;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+}
+
+.sidebar-item {
+    display: inline-block;
+    width: 100%;
+    padding: 10px;
+    color: lightskyblue;
+    text-decoration: none;
+}
+
+.sidebar-item:hover {
+    color: black;
+    background: lightgrey;
+}
+
+.sidebar-item-icon {
+    display: inline-block;
+    height: 14px;
+    width: 14px;
+    margin-right: 6px;
+}
+
+.sidebar-item-icon--translation {
+    background: url(images/translation.svg);
+    background-size: cover;
+}
+
+.stream-box {
+    width: 150px;
+    height: 90px;
+    margin: 16px;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.stream-button {
+    width: 100px;
+    height: 50px;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid lightgrey;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+#player {
+    margin: 16px auto;
+    background: black;
+}
+
+.loader {
+    height: 100px;
+    width: 100px;
+    background-image: url("images/loader.gif");
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    background-size: cover
+}
+
+.invisible {
+    display: none;
+}
+
+
